@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.IClientinfoDAO">
+	<resultMap id="BaseResultMap" type="com.example.demo.dto.Clientinfo">
+		<result column="company_id" property="companyId" jdbcType="DECIMAL" />
+		<result column="staff_id" property="staffId" jdbcType="VARCHAR" />
+		<result column="branch_no" property="branchNo" jdbcType="DECIMAL" />
+		<result column="client_id" property="clientId" jdbcType="VARCHAR" />
+		<result column="client_card" property="clientCard" jdbcType="VARCHAR" />
+		<result column="payee" property="payee" jdbcType="VARCHAR" />
+		<result column="securities_sale_instruction" property="securitiesSaleInstruction" jdbcType="CHAR" />
+		<result column="ccass_investor_account" property="ccassInvestorAccount" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="risk_level" property="riskLevel" jdbcType="VARCHAR" />
+		<result column="staff_content" property="staffContent" jdbcType="VARCHAR" />
+		<result column="organ_flag" property="organFlag" jdbcType="CHAR" />
+		<result column="active_date" property="activeDate" jdbcType="CHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="open_date" property="openDate" jdbcType="DECIMAL" />
+		<result column="cancel_date" property="cancelDate" jdbcType="DECIMAL" />
+		<result column="develop_source" property="developSource" jdbcType="VARCHAR" />
+		<result column="ensure_pwd_valid" property="ensurePwdValid" jdbcType="VARCHAR" />
+		<result column="product_code" property="productCode" jdbcType="VARCHAR" />
+		<result column="bcan_agree" property="bcanAgree" jdbcType="VARCHAR" />
+		<result column="tfa_modes" property="tfaModes" jdbcType="VARCHAR" />
+		<result column="lang_type" property="langType" jdbcType="VARCHAR" />
+		<result column="ttep_firm_id" property="ttepFirmId" jdbcType="VARCHAR" />
+		<result column="modi_version" property="modiVersion" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<select id="queryClientinfoBean" resultMap="BaseResultMap" parameterType="com.example.demo.dto.Clientinfo">
+		SELECT * FROM clientinfo
+		<where>
+			<if test="companyId !=null and companyId !=''">
+				company_id =#{companyId ,jdbcType =VARCHAR}
+			</if>
+			<if test="staffId !=null and staffId !='' ">
+				and staff_id =#{staffId,jdbcType=VARCHAR}
+			</if>
+			<if test="clientId !=null and clientId !=''">
+				and client_id=#{clientId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryClientinfoBeanByProductCode" resultMap="BaseResultMap" parameterType="com.example.demo.dto.Clientinfo">
+		SELECT * FROM clientinfo
+		<where>
+			<if test="companyId !=null and companyId !=''">
+				company_id =#{companyId ,jdbcType =VARCHAR}
+			</if>
+			<if test="staffId !=null and staffId !='' ">
+				and staff_id =#{staffId,jdbcType=VARCHAR}
+			</if>
+			<if test="clientId !=null and clientId !=''">
+				and instr(client_id,#{clientId,jdbcType=VARCHAR}) <![CDATA[>]]> 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryClientinfo" resultMap="BaseResultMap" >
+		SELECT * FROM clientinfo where rownum between 0 and 1
+	</select>
+
+</mapper>
