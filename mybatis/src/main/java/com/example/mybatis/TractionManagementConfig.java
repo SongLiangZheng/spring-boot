@@ -10,6 +10,9 @@ import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -32,7 +35,6 @@ import java.util.Map;
 public class TractionManagementConfig {
 
     private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.example.mybatis.service.impl.*.*(..))";
-//    private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.example.mybatis.dao.*.*(..))";
 
     @Autowired
     DataSourceTransactionManager dataSourceTransactionManager;
@@ -40,15 +42,17 @@ public class TractionManagementConfig {
     @Bean
     public TransactionInterceptor txAdvice() {
 
-        DefaultTransactionAttribute requiredTx = new DefaultTransactionAttribute();
+        RuleBasedTransactionAttribute requiredTx = new RuleBasedTransactionAttribute();
         requiredTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         requiredTx.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+        requiredTx.setRollbackRules(Collections.singletonList(new RollbackRuleAttribute(Exception.class)));
 
-        DefaultTransactionAttribute readOnly = new DefaultTransactionAttribute();
-        readOnly.setPropagationBehavior(TransactionDefinition.PROPAGATION_NOT_SUPPORTED);
+        RuleBasedTransactionAttribute readOnly = new RuleBasedTransactionAttribute();
+        readOnly.setPropagationBehavior(TransactionDefinition.PROPAGATION_SUPPORTS);
         readOnly.setReadOnly(true);
+        readOnly.setRollbackRules(Collections.singletonList(new RollbackRuleAttribute(Exception.class)));
 
-    NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
+        NameMatchTransactionAttributeSource source=new NameMatchTransactionAttributeSource();
         source.addTransactionalMethod("create*", requiredTx);
         source.addTransactionalMethod("insert*", requiredTx);
         source.addTransactionalMethod("update*", requiredTx);
@@ -66,7 +70,9 @@ public class TractionManagementConfig {
         return new TransactionInterceptor(dataSourceTransactionManager, source);
 }
 
+    //利用AspectJExpressionPointcut设置切面=切点+通知（写成内部bean的方式）
     @Bean
+    @Order(0)
     public Advisor txAdviceAdvisor() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
         pointcut.setExpression(AOP_POINTCUT_EXPRESSION);
