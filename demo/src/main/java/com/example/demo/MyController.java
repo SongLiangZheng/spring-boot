@@ -17,6 +17,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MyController {
 
+    @Autowired
+    private TreadTasks treadTasks;
+
+    @GetMapping("/startMysync")
+    @ResponseBody
+    public String useMySyncTask() {
+//        treadTasks.startMyTreadTask();
+        return "success";
+    }
+
     @GetMapping("/gender")
     public ModelAndView freemarker() {
         List<Friend> friends = new ArrayList<>();
