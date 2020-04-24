@@ -3,9 +3,9 @@ package com.example.mybatis.generator.dto;
 public class UserInfo {
     private Integer id;
 
-    private String telephone;
+    private String name;
 
-    private String userAddress;
+    private String address;
 
     public Integer getId() {
         return id;
@@ -15,19 +15,19 @@ public class UserInfo {
         this.id = id;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getName() {
+        return name;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone == null ? null : telephone.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getUserAddress() {
-        return userAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress == null ? null : userAddress.trim();
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
     }
 }
