@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.ProxyTransactionManagementConf
 
 @SpringBootApplication
 @EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)
-//@ImportResource("classpath:spring-beans.xml")
 public class MybatisApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MybatisApplication.class, args);

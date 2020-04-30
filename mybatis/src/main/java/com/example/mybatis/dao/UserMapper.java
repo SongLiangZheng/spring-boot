@@ -32,4 +32,6 @@ public interface UserMapper {
 
 	@Insert("insert into user(name,age) values(#{name},#{age})")
     public int insert(User user);
+
+	public List<User> getAllUsers();
 }

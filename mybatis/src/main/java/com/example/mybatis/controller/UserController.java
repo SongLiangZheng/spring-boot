@@ -19,14 +19,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-    @Autowired
-    private ApplicationContext applicationContext;
 
     @GetMapping("")
     public List<User> getAllUsers(){
-        String[] beanNamesForType = applicationContext
-                .getBeanNamesForType(SqlSessionFactoryBean.class);
-        System.out.println(beanNamesForType[0]);
         return userService.getUsers();
     }
 

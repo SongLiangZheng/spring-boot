@@ -1,4 +1,4 @@
-package com.example.mybatis.service.impl;
+package com.example.mybatis.service;
 
 import com.example.mybatis.dao.UserMapper;
 import com.example.mybatis.dto.User;
@@ -28,7 +28,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getUsers() {
-        return userMapper.getUsers();
+        return userMapper.getAllUsers();
     }
 
     @Override
