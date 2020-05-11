@@ -1,5 +1,6 @@
 package com.example.mybatis;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.example.mybatis.service.IUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class MybatisApplicationTests {
 
 	@Autowired

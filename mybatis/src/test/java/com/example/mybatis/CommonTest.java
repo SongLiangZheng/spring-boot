@@ -1,10 +1,11 @@
 package com.example.mybatis;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Ignore
 public class CommonTest {
     @Test
     public void testMap() {

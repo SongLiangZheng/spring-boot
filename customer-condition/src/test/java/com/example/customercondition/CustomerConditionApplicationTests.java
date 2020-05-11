@@ -20,5 +20,4 @@ class CustomerConditionApplicationTests {
         String test = testService.test();
         System.out.println(test);
     }
-
 }
