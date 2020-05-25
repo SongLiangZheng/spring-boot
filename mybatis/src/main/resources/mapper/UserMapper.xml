@@ -8,4 +8,8 @@
   <select id="getAllUsers" resultMap="BaseResultMap">
   	select * from user
   </select>
+
+  <select id="getAllUserByProcedure" resultMap="BaseResultMap">
+    call getAllUserByProcedure()
+  </select>
 </mapper>

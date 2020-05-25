@@ -34,4 +34,6 @@ public interface UserMapper {
     public int insert(User user);
 
 	public List<User> getAllUsers();
+
+	public List<User> getAllUserByProcedure();
 }
