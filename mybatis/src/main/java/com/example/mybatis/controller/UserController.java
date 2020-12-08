@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -42,6 +39,12 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public int deleteUser(@PathVariable int id){
         return userService.delete(id);
+    }
+
+    @PostMapping("/post/users")
+    public List<User> showUsers(@RequestBody List<User> users,String type){
+        System.out.println(type);
+        return users;
     }
 
 
