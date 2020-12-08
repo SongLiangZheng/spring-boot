@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +17,7 @@ import java.util.Map;
 //@Component
 @Aspect
 public class RequestLogAspect {
-    private final static Logger LOGGER = LoggerFactory.getLogger(RequestLogAspect.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(RequestLogAspectConcurrent.class);
 
     @Pointcut("execution(* com.hs.slz.controller.*..*(..))")
     public void requestServer() {
