@@ -1,14 +1,11 @@
 package com.hs.slz.common;
 
-import lombok.Data;
-import org.junit.Before;
+import com.hs.slz.common.dto.User;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SpringBootTest
 public class LambdaTest {

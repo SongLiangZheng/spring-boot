@@ -2,7 +2,7 @@ package com.example.customercondition;
 
 import com.example.customercondition.service.HelloService;
 import com.example.customercondition.service.TestService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

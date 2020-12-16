@@ -5,6 +5,7 @@ import com.hs.slz.mapStruct.entity.*;
 import com.hs.slz.mapStruct.mapper.CustomerMapper;
 import com.hs.slz.mapStruct.mapper.ItemConverter;
 import com.hs.slz.mapStruct.mapper.PersonConverter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Test;
 
@@ -20,11 +21,11 @@ public class PersonConverterTest {
 
     @Test
     public void testOne2Many() {
-        Person person = new Person(1L, "zhige", "zhige.me@gmail.com", new Date(), new User(1));
+        Person person = new Person(1L, "zhige   ", "zhige.me@gmail.com", new Date(), new User(1));
         PersonDTO personDTO = PersonConverter.INSTANCE.toDTO(person);
         assertNotNull(personDTO);
         assertEquals(personDTO.getId(), person.getId());
-        assertEquals(personDTO.getName(), person.getName());
+        assertEquals(personDTO.getName(), StringUtils.trim(person.getName()));
         assertEquals(personDTO.getBirth(), person.getBirthday());
         assertNull(personDTO.getEmail());
         String format = DateFormatUtils.format(personDTO.getBirth(), "yyyy-MM-dd HH:mm:ss");

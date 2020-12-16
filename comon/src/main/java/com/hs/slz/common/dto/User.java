@@ -1,4 +1,4 @@
-package com.hs.slz.common;
+package com.hs.slz.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
