@@ -1,4 +1,4 @@
-package com.hs.slz.mapStruct;
+package com.hs.slz.mapStruct.entity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

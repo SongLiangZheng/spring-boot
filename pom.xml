@@ -28,6 +28,9 @@
         <module>spring-boot-mockito</module>
         <module>spring-boot-aop-printer</module>
         <module>spring-boot-mp</module>
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-ws</module>
+        <module>spring-boot-mq-dead-letter</module>
     </modules>
 
     <properties>

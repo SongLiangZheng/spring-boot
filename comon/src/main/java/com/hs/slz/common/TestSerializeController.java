@@ -2,6 +2,7 @@ package com.hs.slz.common;
 
 import cn.hutool.json.JSONUtil;
 import com.hs.slz.common.dto.Bond;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,11 @@ public class TestSerializeController {
     @PostMapping("/deSerial")
     public void deSerial(@RequestBody Bond bond) {
         System.out.println(JSONUtil.toJsonStr(bond));
+    }
+
+    @GetMapping("/date")
+    public void date(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
+        System.out.println(date);
     }
 
 }
