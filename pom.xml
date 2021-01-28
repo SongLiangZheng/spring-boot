@@ -30,7 +30,10 @@
         <module>spring-boot-mp</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-ws</module>
-        <module>spring-boot-mq-dead-letter</module>
+        <module>spring-boot-rabbitmq-dead-letter</module>
+        <module>spring-boot-redis-delayMsg</module>
+        <module>spring-boot-rocketmq-delayMsg</module>
+        <module>spring-boot-delayMsg</module>
     </modules>
 
     <properties>

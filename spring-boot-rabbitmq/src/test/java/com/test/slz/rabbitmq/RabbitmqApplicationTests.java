@@ -15,8 +15,8 @@ public class RabbitmqApplicationTests {
 
     @Test
     public void send() {
-        messageService.sendDelayMsg("我想在10秒后被消费",10000);
-        messageService.sendDelayMsg("我想在3秒后被消费",3000);
+        messageService.sendDelayMsg(new MyMessage("我想在10秒后被消费"),10000);
+        messageService.sendDelayMsg(new MyMessage("我想在3秒后被消费"),3000);
     }
 
 }

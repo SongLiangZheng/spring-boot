@@ -1,2 +1,2 @@
-delete from user;
-insert into user(name,age) values ('zhangsan;',13),('lis',15);
+delete from myMessage;
+insert into myMessage(name,age) values ('zhangsan;',13),('lis',15);

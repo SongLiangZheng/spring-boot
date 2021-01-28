@@ -1,0 +1,8 @@
+rocketmq:
+  name-server: 172.20.0.14:9876
+  producer-group-name: default-producer-group
+  producer:
+    access-key: rockmqduser
+    secret-key: 0y6jOmgb5i2e1cb7br7tm6n
+    group: default-producer-group
+    send-message-timeout: 3000

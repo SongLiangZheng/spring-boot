@@ -11,9 +11,9 @@ import java.util.Date;
 public class DelayReceiver {
 
     @RabbitListener(queues = RabbitMqConfig.DELAY_QUEUE)
-    public void receive(String msg) {
+    public void receive(MyMessage myMessage) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("消息接收时间:"+sdf.format(new Date()));
-        System.out.println("接收到的消息:"+msg);
+        System.out.println("接收到的消息:"+myMessage.getMsg());
     }
 }

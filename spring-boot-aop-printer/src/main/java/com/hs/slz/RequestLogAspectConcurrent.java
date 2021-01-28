@@ -2,6 +2,7 @@ package com.hs.slz;
 
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -19,14 +20,15 @@ import java.util.Map;
 
 @Component
 @Aspect
+@Data
+@Slf4j
 public class RequestLogAspectConcurrent {
-    private final static Logger LOGGER = LoggerFactory.getLogger(RequestLogAspectConcurrent.class);
 
     @Pointcut("execution(* com.hs.slz.controller.*..*(..))")
-    public void requestServer() {
+    public void apiAop() {
     }
 
-    @Around("requestServer()")
+    @Around("apiAop()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -41,13 +43,12 @@ public class RequestLogAspectConcurrent {
         requestInfo.setRequestParams(getRequestParamsByJoinPoint(proceedingJoinPoint));
         requestInfo.setResult(result);
         requestInfo.setTimeCost(System.currentTimeMillis() - start);
-        LOGGER.info("Request Info      : {}", JSONUtil.toJsonStr(requestInfo));
-
+        log.info("Request Info      : {}", JSONUtil.toJsonStr(requestInfo));
         return result;
     }
 
 
-    @AfterThrowing(pointcut = "requestServer()", throwing = "e")
+    @AfterThrowing(pointcut = "apiAop()", throwing = "e")
     public void doAfterThrow(JoinPoint joinPoint, RuntimeException e) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
@@ -59,15 +60,9 @@ public class RequestLogAspectConcurrent {
                 joinPoint.getSignature().getName()));
         requestErrorInfo.setRequestParams(getRequestParamsByJoinPoint(joinPoint));
         requestErrorInfo.setException(e);
-        LOGGER.info("Error Request Info      : {}", JSONUtil.toJsonStr(requestErrorInfo));
+        log.info("Error Request Info      : {}", JSONUtil.toJsonStr(requestErrorInfo));
     }
 
-    /**
-     * 获取入参
-     * @param proceedingJoinPoint
-     *
-     * @return
-     * */
     private Map<String, Object> getRequestParamsByJoinPoint(ProceedingJoinPoint proceedingJoinPoint) {
         //参数名
         String[] paramNames = ((MethodSignature)proceedingJoinPoint.getSignature()).getParameterNames();

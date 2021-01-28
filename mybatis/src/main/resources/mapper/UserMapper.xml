@@ -6,7 +6,7 @@
     <result column="age" property="age" jdbcType="INTEGER" />
   </resultMap>
   <select id="getAllUsers" resultMap="BaseResultMap">
-  	select * from user
+  	select * from myMessage
   </select>
 
   <select id="getAllUserByProcedure" resultMap="BaseResultMap">

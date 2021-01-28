@@ -17,15 +17,12 @@ public class MessageServiceImpl {
     @Resource
     private RabbitTemplate rabbitTemplate;
 
-    public void sendDelayMsg(String msg, Integer delay) {
+    public void sendDelayMsg(MyMessage msg, Integer delay) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("消息发送时间:" + sdf.format(new Date()));
-        rabbitTemplate.convertAndSend(RabbitMqConfig.DELAY_EXCHANGE, RabbitMqConfig.DELAY_QUEUE, msg, new MessagePostProcessor() {
-            @Override
-            public Message postProcessMessage(Message message) throws AmqpException {
-                message.getMessageProperties().setHeader("x-delay", delay);
-                return message;
-            }
+        rabbitTemplate.convertAndSend(RabbitMqConfig.DELAY_EXCHANGE, RabbitMqConfig.DELAY_QUEUE, msg, message -> {
+            message.getMessageProperties().setHeader("x-delay", delay);
+            return message;
         });
     }
 }
