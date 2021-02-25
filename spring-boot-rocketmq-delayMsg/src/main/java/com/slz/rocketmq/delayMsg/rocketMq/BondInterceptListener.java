@@ -9,8 +9,10 @@ import com.slz.rocketmq.delayMsg.dto.InterceptNoticeEnum;
 import com.slz.rocketmq.delayMsg.dto.RocketMqDelayLevelEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RocketMQMessageListener(consumerGroup = "TestConsumerGroup", topic = BondInterceptListener.INTERCEPT_TOPIC)
+@RocketMQMessageListener(consumerGroup = "TestConsumerGroup",
+        topic = BondInterceptListener.INTERCEPT_TOPIC,selectorExpression = "AAA")
 @Slf4j
 public class BondInterceptListener implements RocketMQListener<InterceptMessageDTO> {
     public static final String INTERCEPT_TOPIC = "bondIntercept";

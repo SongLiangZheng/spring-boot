@@ -5,6 +5,7 @@ import com.test.slz.ApplicationStarter;
 import com.test.slz.MethodTest;
 import com.test.slz.UserService;
 import com.test.slz.entity.User;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +29,7 @@ public class SpyTest{
     @Test
     public void test1() throws IllegalAccessException {
         when(userService.getUser(1L)).thenReturn(new User(1L,"李四",14));
-        System.out.println(userService.getUser(1L));
+        Assert.assertEquals("李四",userService.getUser(1L).getName());
     }
 
     @Test

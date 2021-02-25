@@ -34,6 +34,7 @@
         <module>spring-boot-redis-delayMsg</module>
         <module>spring-boot-rocketmq-delayMsg</module>
         <module>spring-boot-delayMsg</module>
+        <module>spring-boot-validate</module>
     </modules>
 
     <properties>
@@ -76,6 +77,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>22.0</version>
         </dependency>
     </dependencies>
 

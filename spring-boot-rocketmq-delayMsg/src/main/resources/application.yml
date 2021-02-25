@@ -3,3 +3,5 @@ rocketmq:
   producer:
     group: rocketmq-app-box
     send-message-timeout: 30000
+    retry-next-server: true
+    retry-times-when-send-async-failed: 2

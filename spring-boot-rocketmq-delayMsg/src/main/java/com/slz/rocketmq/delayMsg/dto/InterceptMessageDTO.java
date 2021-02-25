@@ -15,13 +15,13 @@ public class InterceptMessageDTO implements Serializable, Delayable {
     private Long delayTime;
 
     public InterceptMessageDTO(InterceptNoticeEnum interceptNoticeEnum, InterceptMsgDTO interceptMsgDTO, Long delayTime) {
-        this.msgId= UUID.fastUUID().toString(true);
+        this.msgId= UUID.randomUUID().toString();
         this.interceptNoticeEnum = interceptNoticeEnum;
         this.interceptMsgDTO = interceptMsgDTO;
         this.delayTime = delayTime;
     }
 
     public InterceptMessageDTO(){
-        this.msgId= UUID.fastUUID().toString(true);
+        this.msgId= UUID.randomUUID().toString();
     }
 }
