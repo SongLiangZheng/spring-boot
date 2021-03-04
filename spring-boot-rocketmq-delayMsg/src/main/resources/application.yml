@@ -5,3 +5,6 @@ rocketmq:
     send-message-timeout: 30000
     retry-next-server: true
     retry-times-when-send-async-failed: 2
+
+server:
+  port: 8081

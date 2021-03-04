@@ -7,6 +7,7 @@ import com.slz.rocketmq.delayMsg.dto.InterceptMessageDTO;
 import com.slz.rocketmq.delayMsg.dto.InterceptMsgDTO;
 import com.slz.rocketmq.delayMsg.dto.InterceptNoticeEnum;
 import com.slz.rocketmq.delayMsg.dto.RocketMqDelayLevelEnum;
+import com.slz.rocketmq.delayMsg.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -32,6 +33,8 @@ public class BondInterceptListener implements RocketMQListener<InterceptMessageD
     public static final Long MS_OF_MINUTE = 1000 * 60L;
     @Resource
     private RocketMQService rocketMQService;
+    @Resource
+    private UserService userService;
 
     @Override
     public void onMessage(InterceptMessageDTO dto) {
@@ -40,6 +43,7 @@ public class BondInterceptListener implements RocketMQListener<InterceptMessageD
             return;
         }
         process(dto);
+        userService.asyncHello("张三");
     }
 
     private boolean checkIfResend(InterceptMessageDTO dto) {

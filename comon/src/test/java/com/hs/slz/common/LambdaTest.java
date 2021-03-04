@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -24,7 +25,8 @@ public class LambdaTest {
 //        Stream::mapToInt
 //        Stream::mapToDouble
 //        Stream::mapToLong
-        Double a=userList.stream().mapToDouble(user->user.getAge()).sum();//userList不能为null或空
+        int a=userList.stream().mapToInt(user->user.getAge()).sum();//userList不能为null或空
+        int[][] flights=null;
         System.out.println(a);
     }
 

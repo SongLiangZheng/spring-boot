@@ -35,6 +35,7 @@
         <module>spring-boot-rocketmq-delayMsg</module>
         <module>spring-boot-delayMsg</module>
         <module>spring-boot-validate</module>
+        <module>spring-boot-hystrix</module>
     </modules>
 
     <properties>
