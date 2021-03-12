@@ -23,10 +23,10 @@ public enum RocketMqDelayLevelEnum {
     DELAY_LEVEL17(17, 60 * 1000L),
     DELAY_LEVEL18(18, 2 * 60 * 1000L),
     ;
-    private Integer level;
-    private Long delayTime;//second
+    private final Integer level;
+    private final Long delayTime;//second
 
-    private RocketMqDelayLevelEnum(Integer level, Long delayTime){
+    RocketMqDelayLevelEnum(Integer level, Long delayTime){
         this.level=level;
         this.delayTime=delayTime;
     }

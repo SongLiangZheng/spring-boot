@@ -19,7 +19,6 @@
         <module>mybatis-generator</module>
         <module>mybatis</module>
         <module>customer-condition</module>
-        <module>person-spring-boot-starter</module>
         <module>comon</module>
         <module>spring-boot-nacos-server</module>
         <module>spring-boot-nacos-client</module>
@@ -31,11 +30,12 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-ws</module>
         <module>spring-boot-rabbitmq-dead-letter</module>
-        <module>spring-boot-redis-delayMsg</module>
         <module>spring-boot-rocketmq-delayMsg</module>
         <module>spring-boot-delayMsg</module>
         <module>spring-boot-validate</module>
         <module>spring-boot-hystrix</module>
+        <module>spring-boot-redis-flash-sale</module>
+        <module>spring-boot-redis-starter</module>
     </modules>
 
     <properties>

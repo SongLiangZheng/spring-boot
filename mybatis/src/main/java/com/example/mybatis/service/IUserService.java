@@ -11,15 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IUserService {
 
 
-	public User getUserByName(String name);
+	User getUserByName(String name);
 
-	public User getUserById(int id);
+	User getUserById(int id);
 
-	public List<User> getUsers();
+	List<User> getUsers();
 
-	public int updateA(User user);
+	int updateA(User user);
 
-	public int delete(int id);
+	int delete(int id);
 
 	int insert(User user);
 

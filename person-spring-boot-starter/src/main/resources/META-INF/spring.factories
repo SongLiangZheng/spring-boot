@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.hs.slz.person.starter.PersonServiceAutoConfiguration

@@ -1,0 +1,8 @@
+# MybatisPlus配置
+mybatis-plus:
+  mapper-locations: classpath*:mappers/**/*.xml
+  type-aliases-package: com.qtrade.primary.bondsale.bids.refactor
+  type-enums-package: com.cool.slz.enums
+  configuration:
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    use-deprecated-executor: false

@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: local
+  rabbitmq:
+    host: 139.9.93.229
+    password: guest
+    username: guest
+    listener:
+      simple:
+        acknowledge-mode: auto  # 自动ack
+        default-requeue-rejected: true #需设置为true，否则重试多次后将不会进入死信队列
+        retry:
+          enabled: true
+          max-attempts: 3  #最大重试次数
+          max-interval: 10000   # 重试最大间隔时间
+          initial-interval: 2000  # 重试初始间隔时间

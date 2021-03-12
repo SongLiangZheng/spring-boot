@@ -15,25 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Mapper
 public interface UserMapper {
 	@Select("select id,name,age from user where name=#{name}")
-	public User getUserByName(String name);
+    User getUserByName(String name);
 
 	@Select("select id,name,age from user where id=#{id}")
-	public User getUserById(int id);
+    User getUserById(int id);
 	
 	@Select("select * from user")
 	@Transactional
-	public List<User> getUsers();
+    List<User> getUsers();
 
 	@Update("update user set name = #{name} where id = #{id}")
-	public int updateUser(User user);
+    int updateUser(User user);
 
 	@Delete("delete from user where id=#{id}")
-	public int delete(int id);
+    int delete(int id);
 
 	@Insert("insert into user(name,age) values(#{name},#{age})")
-    public int insert(User user);
+    int insert(User user);
 
-	public List<User> getAllUsers();
+	List<User> getAllUsers();
 
-	public List<User> getAllUserByProcedure();
+	List<User> getAllUserByProcedure();
 }

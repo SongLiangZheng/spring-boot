@@ -3,8 +3,8 @@ package com.slz.rocketmq;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import com.slz.rocketmq.delayMsg.ApplicationStarter;
+import com.slz.rocketmq.delayMsg.config.CommConstants;
 import com.slz.rocketmq.delayMsg.dto.InterceptMsgDTO;
-import com.slz.rocketmq.delayMsg.rocketMq.BondInterceptListener;
 import com.slz.rocketmq.delayMsg.rocketMq.RocketMQService;
 import com.slz.rocketmq.delayMsg.dto.InterceptMessageDTO;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class RocketmqApplicationTests {
             interceptMsgDTO1.setOrgId("机构"+i);
             interceptMsgDTO1.setInterceptDate(date);
             interceptMessageDTO1.setInterceptMsgDTO(interceptMsgDTO1);
-            rocketMQService.sendMsg(BondInterceptListener.INTERCEPT_TOPIC, interceptMessageDTO1);
+            rocketMQService.sendMsg(CommConstants.INTERCEPT_TOPIC, interceptMessageDTO1);
         }
     }
 

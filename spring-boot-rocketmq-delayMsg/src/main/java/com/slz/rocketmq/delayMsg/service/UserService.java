@@ -4,6 +4,6 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface UserService {
 
-    @Async
-    void asyncHello(String name);
+    void test();
+
 }

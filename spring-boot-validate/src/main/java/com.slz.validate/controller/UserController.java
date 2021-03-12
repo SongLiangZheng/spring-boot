@@ -2,7 +2,7 @@ package com.slz.validate.controller;
 
 import com.slz.validate.validate.Create;
 import com.slz.validate.validate.Update;
-import com.slz.validate.dto.RspDTO;
+import com.slz.validate.commonException.RspDTO;
 import com.slz.validate.dto.UserDTO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

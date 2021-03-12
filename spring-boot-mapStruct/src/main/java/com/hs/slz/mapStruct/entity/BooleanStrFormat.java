@@ -11,11 +11,7 @@ public class BooleanStrFormat {
     }
 
     public Boolean toBoolean(String str) {
-        if (str.equals("Y")) {
-            return true;
-        } else {
-            return false;
-        }
+        return str.equals("Y");
     }
 }
 

@@ -2,18 +2,16 @@ package com.slz.rocketmq.delayMsg.rocketMq;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
+import com.slz.rocketmq.delayMsg.config.CommConstants;
 import com.slz.rocketmq.delayMsg.dto.InterceptMessageDTO;
 import com.slz.rocketmq.delayMsg.dto.InterceptMsgDTO;
 import com.slz.rocketmq.delayMsg.dto.InterceptNoticeEnum;
 import com.slz.rocketmq.delayMsg.dto.RocketMqDelayLevelEnum;
-import com.slz.rocketmq.delayMsg.service.UserService;
+import com.slz.rocketmq.delayMsg.service.AsyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +24,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RocketMQMessageListener(consumerGroup = "TestConsumerGroup",
-        topic = BondInterceptListener.INTERCEPT_TOPIC,selectorExpression = "AAA")
+        topic = CommConstants.INTERCEPT_TOPIC)
 @Slf4j
 public class BondInterceptListener implements RocketMQListener<InterceptMessageDTO> {
-    public static final String INTERCEPT_TOPIC = "bondIntercept";
     public static final Long MS_OF_MINUTE = 1000 * 60L;
     @Resource
     private RocketMQService rocketMQService;
     @Resource
-    private UserService userService;
+    private AsyncService asyncService;
 
     @Override
     public void onMessage(InterceptMessageDTO dto) {
@@ -43,7 +40,6 @@ public class BondInterceptListener implements RocketMQListener<InterceptMessageD
             return;
         }
         process(dto);
-        userService.asyncHello("张三");
     }
 
     private boolean checkIfResend(InterceptMessageDTO dto) {
@@ -54,7 +50,7 @@ public class BondInterceptListener implements RocketMQListener<InterceptMessageD
             if (leftDelayTime > 0) {
                 dto.setDelayTime(leftDelayTime);
                 log.info("BondInterceptListener-resend");
-                rocketMQService.sendDelayMsg(INTERCEPT_TOPIC, dto);
+                rocketMQService.sendDelayMsg(CommConstants.INTERCEPT_TOPIC, dto);
                 return true;
             }
         }
@@ -67,6 +63,7 @@ public class BondInterceptListener implements RocketMQListener<InterceptMessageD
         InterceptNoticeEnum msgTypeEnum = messageDto.getInterceptNoticeEnum();
         if (InterceptNoticeEnum.NOTICE_NOW.equals(msgTypeEnum)) {
             log.info("BondInterceptListener-立即截标：{} 时间:{}",messageDto.getMsgId(),DateTime.now().toString());
+            asyncService.asyncHello("张三");
         }else{
             doSendInterceptMqMsg(interceptMsgDto, msgTypeEnum, messageDto.getMsgId());
         }
@@ -77,7 +74,7 @@ public class BondInterceptListener implements RocketMQListener<InterceptMessageD
         InterceptNoticeEnum nextMsgType = getNextMsgType(interceptDate,previousMsgType);
         long delay = interceptDate.getTime() - System.currentTimeMillis() - nextMsgType.getMinute() * MS_OF_MINUTE;
         InterceptMessageDTO interceptMessageDTO = new InterceptMessageDTO(nextMsgType, interceptMsg,delay/ 1000L);
-        rocketMQService.sendDelayMsg(INTERCEPT_TOPIC,interceptMessageDTO);
+        rocketMQService.sendDelayMsg(CommConstants.INTERCEPT_TOPIC,interceptMessageDTO);
     }
 
     private InterceptNoticeEnum getNextMsgType(Date interceptDate, @Nullable InterceptNoticeEnum previousMsgType) {

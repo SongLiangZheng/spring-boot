@@ -1,5 +1,7 @@
 package com.cool.slz;
 
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.lang.Console;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -18,11 +20,8 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,8 +43,9 @@ public class MysqlGenerator extends AutoGenerator {
         mysqlGenerator.execute();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // 注意： TODO的地方需要修改
+        //重复执行将覆盖原文件
         autoGenerate();
     }
 
@@ -77,11 +77,11 @@ public class MysqlGenerator extends AutoGenerator {
         strategy.setEntityLombokModel(true);
         // TODO：设置表名
         strategy.setInclude(
-                "t_primary_tender"
+                "user"
         );
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setEntityTableFieldAnnotationEnable(true);
-        strategy.setTablePrefix("t_");
+//        strategy.setTablePrefix("t_");
 //        strategy.setFieldPrefix("F");
         strategy.setEntitySerialVersionUID(false);
         // 有坑，setSuperEntityClass一定要在setSuperEntityColumns前面，否则子类还是对生成父类的字段
@@ -135,18 +135,27 @@ public class MysqlGenerator extends AutoGenerator {
     private PackageConfig initPackageConfig(AutoGenerator mpg) {
         PackageConfig pc = new PackageConfig();
         // TODO: 模块名
-        pc.setModuleName("bond");
-        pc.setParent("com.qtrade.primary.bondsale.bids.refactor.modules");
+        pc.setModuleName("client");
+        pc.setParent("com.cool.slz");
         mpg.setPackageInfo(pc);
         return pc;
     }
 
     private void initDataSourceConfig(AutoGenerator mpg) {
+        ClassPathResource resource = new ClassPathResource("application.properties");
+        Properties properties = new Properties();
+        try {
+            properties.load(resource.getStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Console.log("Properties: {}", properties);
+
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://212.129.164.73:3306/db_primary_bond_sale?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("NaqcChx3EpCX");
+        dsc.setUrl(properties.getProperty("spring.datasource.url"));
+        dsc.setDriverName(properties.getProperty("spring.datasource.driver-class-name"));
+        dsc.setUsername(properties.getProperty("spring.datasource.username"));
+        dsc.setPassword(properties.getProperty("spring.datasource.password"));
         mpg.setDataSource(dsc);
     }
 
@@ -163,9 +172,9 @@ public class MysqlGenerator extends AutoGenerator {
         gc.setSwagger2(true);
         gc.setFileOverride(true);
         gc.setOpen(false);
-        gc.setMapperName("%sEntityMapper");
-        gc.setXmlName("%sEntityMapper");
-        gc.setEntityName("%sEntity");
+        gc.setMapperName("%sMapper");
+        gc.setXmlName("%sMapper");
+        gc.setEntityName("%s");
         mpg.setGlobalConfig(gc);
     }
 
@@ -182,44 +191,4 @@ public class MysqlGenerator extends AutoGenerator {
         return this.pretreatmentConfigBuilder(config);
     }
 
-    public static void test() {
-        // 代码生成器
-        MysqlGenerator mpg = new MysqlGenerator();
-
-        ConfigBuilder configBuilder = mpg.getConfigBuilder();
-        List<TableInfo> tableInfoList = mpg.getAllTableInfoList(configBuilder);
-        // tableName -> columnName, TableField
-        Map<String, Map<String, TableField>> tablefieldMap = tableInfoList
-                .stream()
-                .collect(Collectors.toMap(TableInfo::getName,
-                        v -> v.getFields().stream()
-                                .collect(Collectors.toMap(TableField::getColumnName, value -> value))));
-
-        List<Map<String, TableField>> list = new ArrayList<>(tablefieldMap.values());
-        // 四个表合同后的所有字段
-        Set<String> allFieldSet = list.stream().flatMap(m -> m.entrySet().stream()).map(Map.Entry::getKey).collect(Collectors.toSet());
-        // 四个公共字段
-        Set<String> commonFieldSet = list.stream().map(Map::keySet).collect(Collectors.toList())
-                .stream()
-                .reduce((a, b) -> {
-                    Set<String> tempSet = new HashSet<>(a);
-                    tempSet.retainAll(b);
-                    return tempSet;
-                }).orElse(new HashSet<>());
-        log.info("四个表公共字段如下, size =[{}]", commonFieldSet.size());
-        commonFieldSet.forEach((c) -> {
-            TableField tableField = list.get(0).get(c);
-            log.info("\t column=[{}], type=[{}], comment=[{}]", c, tableField.getType(), tableField.getComment());
-        });
-        tablefieldMap.forEach((t, f) -> {
-            Set<String> fieldSet = f.keySet();
-            fieldSet.removeAll(commonFieldSet);
-            log.info("tableName=[{}], 去除四个表的公用字段后的剩余字段如下, size = [{}]", t, fieldSet.size());
-            for (String field : fieldSet) {
-                log.info("\t column=[{}], type=[{}], comment=[{}]", field, f.get(field).getType(), f.get(field).getComment());
-            }
-
-
-        });
-    }
 }

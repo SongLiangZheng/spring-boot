@@ -19,9 +19,9 @@ public enum InterceptNoticeEnum {
     THIRTY_MINUTE_LATER_NOTICE(4, "三十分钟后截标通知", 30),
     ;
 
-    private Integer type;
-    private String desc;
-    private Integer minute;
+    private final Integer type;
+    private final String desc;
+    private final Integer minute;
 
     public Integer getType() {
         return type;
